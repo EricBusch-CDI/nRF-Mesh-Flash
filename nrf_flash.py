@@ -6,8 +6,6 @@ user_commands = (
     "build",
     "flash"
 )
-
-
 class FileConfig:
 
     def __init__(self, json_config):
@@ -107,9 +105,6 @@ def main():
 
     nrf_builder = NrfBuilder(json_config)
 
-    # os.chdir(nrf_builder.projectBuildDir)
-
-    # nrf_builder.disp_dir()
     if commands_passed is False:
         nrf_builder.build_project()
         nrf_builder.flash_project()

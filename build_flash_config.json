@@ -1,0 +1,9 @@
+{
+    "sdkRoot":          "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src",
+    "sdkBuildDir":      "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/build",
+    "softDevice":       "s132_nrf52_7.2.0_softdevice.hex",
+    "projectName":      "light_switch_server_nrf52832_xxAA_s132_7.2.0.hex",
+    "projectDir" :      "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/examples/dimming/dimming_server",
+    "projectDebugDir":  "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/examples/light_switch/server/build/light_switch_server_nrf52832_xxAA_s132_7.2.0_Debug",
+    "mergedOutput": "merged_output.hex"
+}

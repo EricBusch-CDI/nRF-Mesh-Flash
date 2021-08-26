@@ -47,6 +47,12 @@ class NrfBuilder(FileConfig):
         FileConfig.__init__(self, json_config)
         self.tag = "Nrf Builder"
         self.cmsisCmd = "java -jar " + self.cmsisPath + " " + self.sdkConfPath
+        self.command_dict = {
+            "build": "ninja " + self.projectTarget,
+            "merge": "ninja merge_" + self.projectTarget,
+            "flash": "ninja flash_" + self.projectTarget,
+            "config": "java -jar " + self.cmsisPath + " " + self.sdkConfPath
+        }
         self.command_list = [
             "ninja " + self.projectTarget,
             "mergehex -m " + self.softDevice + " " + self.projectHex +
@@ -54,7 +60,8 @@ class NrfBuilder(FileConfig):
             "nrfjprog --eraseall",
             "nrfjprog --program " + self.mergedOutput,
             "nrfjprog --verify " + self.mergedOutput + " --fast",
-            'nrfjprog --reset'
+            'nrfjprog --reset',
+
         ]
 
         self.command_description = [
@@ -82,19 +89,20 @@ class NrfBuilder(FileConfig):
     def build_project(self):
         os.chdir(self.sdkBuildDir)
         self.print_cmd_description(0)
-        os.system(self.command_list[0])
+        # os.system(self.command_list[0])
+        os.system(self.command_dict["build"])
+
+    def merge_project(self):
+        os.chdir(self.sdkBuildDir)
+        os.system(self.command_dict["merge"])
 
     def flash_project(self):
+        os.chdir(self.sdkBuildDir)
+        os.system(self.command_dict["flash"])
 
-        os.chdir(self.projectBuildDir)
-        self.disp_dir()
-        for i in range(1, len(self.command_list)):
-            self.print_cmd_description(i)
-            os.system(self.command_list[i])
 
-    def run_cmsis(self):
-        # os.system("java")
-        os.system(self.cmsisCmd)
+    def run_cmsis_config(self):
+        os.system(self.command_dict["config"])
 
 
 def main():
@@ -117,17 +125,27 @@ def main():
 
     if commands_passed is False:
         nrf_builder.build_project()
+        nrf_builder.merge_project()
         nrf_builder.flash_project()
         exit()
 
-    if user_commands[0] in sys.argv:
+    if "build" in sys.argv:
         nrf_builder.build_project()
+        exit()
 
-    if user_commands[1] in sys.argv:
+    if "merge" in sys.argv:
+        nrf_builder.merge_project()
+        exit()
+
+    if "flash" in sys.argv:
         nrf_builder.flash_project()
+        exit()
     
-    if user_commands[2] in sys.argv:
-        nrf_builder.run_cmsis()
+    if "config" in sys.argv:
+        nrf_builder.run_cmsis_config()
+        exit()
+    
+    print("Command given is not recognized")
 
 
 if __name__ == "__main__":

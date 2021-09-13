@@ -47,30 +47,11 @@ class NrfBuilder(FileConfig):
         FileConfig.__init__(self, json_config)
         self.tag = "Nrf Builder"
         self.cmsisCmd = "java -jar " + self.cmsisPath + " " + self.sdkConfPath
-<<<<<<< HEAD
         self.command_list = {
             "build" : "ninja " + self.projectTarget,
             "merge" : "ninja " + "merge_" + self.projectTarget,
             "flash" : "ninja " + "flash_" + self.projectTarget
         }
-=======
-        self.command_dict = {
-            "build": "ninja " + self.projectTarget,
-            "merge": "ninja merge_" + self.projectTarget,
-            "flash": "ninja flash_" + self.projectTarget,
-            "config": "java -jar " + self.cmsisPath + " " + self.sdkConfPath
-        }
-        self.command_list = [
-            "ninja " + self.projectTarget,
-            "mergehex -m " + self.softDevice + " " + self.projectHex +
-            " -o " + self.mergedOutput,
-            "nrfjprog --eraseall",
-            "nrfjprog --program " + self.mergedOutput,
-            "nrfjprog --verify " + self.mergedOutput + " --fast",
-            'nrfjprog --reset',
-
-        ]
->>>>>>> 9fffdec99e9fe11d9b533b763904213cabf3de5f
 
         self.command_description = [
             "attempting to run ninja and perform build step",
@@ -100,7 +81,6 @@ class NrfBuilder(FileConfig):
 
     def build_project(self):
         os.chdir(self.sdkBuildDir)
-<<<<<<< HEAD
         os.system(self.command_list["build"])
 
 
@@ -121,23 +101,6 @@ class NrfBuilder(FileConfig):
     def run_cmsis(self):
         
         os.system(self.cmsisCmd)
-=======
-        self.print_cmd_description(0)
-        # os.system(self.command_list[0])
-        os.system(self.command_dict["build"])
-
-    def merge_project(self):
-        os.chdir(self.sdkBuildDir)
-        os.system(self.command_dict["merge"])
-
-    def flash_project(self):
-        os.chdir(self.sdkBuildDir)
-        os.system(self.command_dict["flash"])
-
-
-    def run_cmsis_config(self):
-        os.system(self.command_dict["config"])
->>>>>>> 9fffdec99e9fe11d9b533b763904213cabf3de5f
 
 
 def main():
@@ -170,27 +133,11 @@ def main():
         nrf_builder.build_project()
         exit()
 
-<<<<<<< HEAD
     if "flash" in sys.argv:
         nrf_builder.flash_project()
 
     if "merge" in sys.argv:
         nrf_builder.run_cmsis()
-=======
-    if "merge" in sys.argv:
-        nrf_builder.merge_project()
-        exit()
-
-    if "flash" in sys.argv:
-        nrf_builder.flash_project()
-        exit()
-    
-    if "config" in sys.argv:
-        nrf_builder.run_cmsis_config()
-        exit()
-    
-    print("Command given is not recognized")
->>>>>>> 9fffdec99e9fe11d9b533b763904213cabf3de5f
 
 
 if __name__ == "__main__":

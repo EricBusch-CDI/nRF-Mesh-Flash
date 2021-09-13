@@ -2,9 +2,9 @@
     "sdkRoot":          "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src",
     "sdkBuildDir":      "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/build",
     "softDevice":       "C:/nordic_soft_devices/s132nrf52720/s132_nrf52_7.2.0_softdevice.hex",
-    "projectTarget":    "dimming_server_nrf52832_xxAA_s132_7.2.0",
-    "projectHex":       "dimming_server_nrf52832_xxAA_s132_7.2.0.hex",
-    "projectBuildDir" : "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/build/examples/dimming/dimming_server",
+    "projectTarget":    "mesh_hub",
+    "projectHex":       "mesh_hub.hex",
+    "projectBuildDir" : "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/build",
     "mergedOutput": "merged_output.hex",
     "cmsisPath"   : "C:/Nordic_SDKS/nRF5SDK1702d674dde/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar",
     "sdkConfPath" : "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/examples/dimming/dimming_server/include/sdk_config.h"

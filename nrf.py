@@ -8,6 +8,7 @@ user_commands = (
     "config"
 )
 
+NRF_TOOL_VERSION = "0.5"
 
 class FileConfig:
 
@@ -107,8 +108,7 @@ def main():
 
     total_args = len(sys.argv)
     sys.argv = [element.lower() for element in sys.argv]
-    print(sys.argv)
-    
+
     commands_passed = total_args > 1
     json_config_file = "build_flash_config.json"
     json_config = None
@@ -120,7 +120,7 @@ def main():
         json_config = json.load(read_file)
 
     nrf_builder = NrfBuilder(json_config)
-    print("build directory ", nrf_builder.projectBuildDir)
+    
     if commands_passed is False:
         print("There is no commands")
         nrf_builder.build_project()
@@ -138,7 +138,15 @@ def main():
 
     if "merge" in sys.argv:
         nrf_builder.run_cmsis()
+    
+    if "config" in sys.argv:
+        nrf_builder.run_cmsis()
+    
+    if "help" in sys.argv:
+        pass
 
+    if "--version" in sys.argv:
+        print("Version: ", NRF_TOOL_VERSION)
 
 if __name__ == "__main__":
     main()

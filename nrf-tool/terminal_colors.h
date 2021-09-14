@@ -1,3 +1,6 @@
+#ifndef TERMINAL_COLORS
+#define TERMINAL_COLORS
+
 //the following are UBUNTU/LINUX, and MacOS ONLY terminal color codes.
 #define TERMINAL_COLOR_RESET   "\033[0m"
 #define TERMINAL_COLOR_BLACK   "\033[30m"      /* Black */
@@ -16,3 +19,5 @@
 #define TERMINAL_COLOR_BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
 #define TERMINAL_COLOR_BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define TERMINAL_COLOR_BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+
+#endif

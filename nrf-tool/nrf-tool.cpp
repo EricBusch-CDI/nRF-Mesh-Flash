@@ -5,6 +5,8 @@
 #include <json.h>
 #include <algorithm>
 #include "terminal_colors.h"
+#include "about.h"
+#include <iomanip>
 
 #ifdef _WIN32
 #include <direct.h>
@@ -130,7 +132,30 @@ void nrf_default(Json::Value root, string project_target)
 
     cd(buf);
 }
+void nrf_help()
+{
+    const map<string, string> help ={
+        {"build",  "Use Ninja to build the application into hex file"},
+        {"merge" , "Merge soft device hex and application hex into one file"},
+        {"flash" , "Use Ninja target to flash to MCU"},
+        {"config" , "Open an instance of the CMSIS Configuration Wizzard"},
+        {"--version" ,  "Get the version number of the nRF Tool"}
+    };
+    
+    cout << TERMINAL_COLOR_GREEN << endl;
+    cout << "nRF-Tool Help" << endl;
+    cout << "------------------------------------------------" << endl;
 
+    for(auto const &x : help)
+    {
+         cout << x.first    // string (key)
+              << '\t'
+              << x.second   // string's value 
+              << endl;
+    }
+
+    cout << TERMINAL_COLOR_RESET << endl;
+}
 int main(int argc, char *argv[])
 {
 
@@ -225,6 +250,16 @@ int main(int argc, char *argv[])
                 {
                     nrf_flash_project(root, project_target);
                 }
+                else if(args[i] == "--version")
+                {
+                    cout << TERMINAL_COLOR_GREEN << "Version " << NRF_TOOL_VERSION << endl;
+                    cout << TERMINAL_COLOR_RESET << endl;
+                }
+                else if(args[i] == "help" || args[i] == "man")
+                {
+                    nrf_help();
+                }   
+
            
             }
         }

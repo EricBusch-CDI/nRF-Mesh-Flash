@@ -7,5 +7,6 @@
     "projectBuildDir" : "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/build/examples/nw_mesh_hub",
     "mergedOutput": "merged_output.hex",
     "cmsisPath"   : "C:/Nordic_SDKS/nRF5SDK1702d674dde/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar",
-    "sdkConfPath" : "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/examples/dimming/dimming_server/include/sdk_config.h"
+    "sdkConfPath" : "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/examples/dimming/dimming_server/include/sdk_config.h",
+    "rttViewerPath": "C:/Program Files/SEGGER/JLink/JLinkRTTViewer.exe"
 }

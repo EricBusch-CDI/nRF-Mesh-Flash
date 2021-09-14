@@ -156,6 +156,20 @@ void nrf_help()
 
     cout << TERMINAL_COLOR_RESET << endl;
 }
+
+void nrf_rtt_viewer(Json::Value root)
+{
+    string rtt_viewer_path = "\"" + root["rttViewerPath"].asString() + "\"";
+
+    if(rtt_viewer_path.empty())
+    {
+        cout << TERMINAL_COLOR_RED << "RTT Viewer Path Empty" << endl;
+        cout << TERMINAL_COLOR_RESET << endl;
+        return;
+    }
+    system(rtt_viewer_path.c_str());
+}
+
 int main(int argc, char *argv[])
 {
 
@@ -259,7 +273,10 @@ int main(int argc, char *argv[])
                 {
                     nrf_help();
                 }   
-
+                else if(args[i] == "rtt-viewer")
+                {
+                    nrf_rtt_viewer(root);
+                }
            
             }
         }

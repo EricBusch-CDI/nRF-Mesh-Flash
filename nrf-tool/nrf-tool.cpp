@@ -25,7 +25,11 @@ const char *user_commands[4] = {"build", "flash", "config", "help"};
 const char *ninja_commands[3] = {"", "merge_", "flash_"};
 
 using namespace std;
-
+void cout_terminal_color(string color, string output)
+{
+    cout << color << output << endl;
+    cout << TERMINAL_COLOR_RESET;
+}
 void display_args(int argc, char *argv[])
 {
     cout << "Args:" << endl;
@@ -156,7 +160,6 @@ void nrf_help()
 
     cout << TERMINAL_COLOR_RESET << endl;
 }
-
 void nrf_rtt_viewer(Json::Value root)
 {
     string rtt_viewer_path = "\"" + root["rttViewerPath"].asString() + "\"";
@@ -277,7 +280,11 @@ int main(int argc, char *argv[])
                 {
                     nrf_rtt_viewer(root);
                 }
-           
+                else
+                {
+                    cout << TERMINAL_COLOR_RED << "Not a recognized command!" <<endl;
+                    cout << TERMINAL_COLOR_RESET << endl;
+                }
             }
         }
 

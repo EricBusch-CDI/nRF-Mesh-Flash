@@ -280,11 +280,6 @@ int main(int argc, char *argv[])
                 {
                     nrf_rtt_viewer(root);
                 }
-                else
-                {
-                    cout << TERMINAL_COLOR_RED << "Not a recognized command!" <<endl;
-                    cout << TERMINAL_COLOR_RESET << endl;
-                }
             }
         }
 

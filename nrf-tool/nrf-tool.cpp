@@ -4,6 +4,7 @@
 #include <string>
 #include <json.h>
 #include <algorithm>
+#include "terminal_colors.h"
 
 #ifdef _WIN32
 #include <direct.h>
@@ -36,23 +37,100 @@ void print_cwd()
     char cwd_buf[4096];
     cout << "CWD: " << cwd(cwd_buf, sizeof(cwd_buf)) << endl;
 }
+void run_build(string project_target)
+{
+    string command = "ninja " + project_target;
+    cout << command << endl;
+    system(command.c_str());
+}
+void nrf_build(Json::Value root, string project_target)
+{
+    char buf[4096];
+    cwd(buf, sizeof(buf));
 
+    cd(root["sdkBuildDir"].asString().c_str());
+
+    run_build(project_target);
+
+    cd(buf);
+}
+void run_merge_hex(string project_target)
+{
+    string command = "ninja merge_" + project_target;
+    cout << command << endl;
+    system(command.c_str());
+}
+void nrf_merge_hex(Json::Value root, string project_target)
+{
+    char buf[4096];
+    cwd(buf, sizeof(buf));
+
+    cd(root["sdkBuildDir"].asString().c_str());
+
+    run_merge_hex(project_target);
+
+    cd(buf);
+}
+void run_flash(string project_target)
+{
+    string command = "ninja flash_" + project_target;
+    cout << command << std::endl;
+    system(command.c_str());
+
+}
+void nrf_flash_project(Json::Value root, string project_target)
+{
+    char buf[4096];
+    cwd(buf, sizeof(buf));
+
+    cd(root["sdkBuildDir"].asString().c_str());
+
+    run_flash(project_target);
+
+    cd(buf);
+}
+void run_config(string cmsis_path, string sdk_config_path)
+{
+    string command = "java -jar " + cmsis_path + " " + sdk_config_path;
+    cout << TERMINAL_COLOR_YELLOW << "Warning: CMSIS Configurator blocks terminal input" << endl;
+    cout << "Make sure to close out after use" << TERMINAL_COLOR_RESET << endl;
+    cout << command << endl;
+    system(command.c_str());
+}
+void nrf_config(Json::Value root)
+{
+    string cmsis_path = root["cmsisPath"].asString();
+    string sdk_config_path = root["sdkConfPath"].asString();
+    
+    if(cmsis_path.empty())
+    {
+        cout << "Given path to cmsis configurator is empty!" << endl;
+        return;
+    }
+    if(sdk_config_path.empty())
+    {
+        cout << "Given Path to sdk_config.h is empty!" << endl;
+        return;
+    }
+
+    run_config(cmsis_path, sdk_config_path);
+
+}
 void nrf_default(Json::Value root, string project_target)
 {
     char buf[4096];
     cwd(buf, sizeof(buf));
 
-    string current_directory(buf);
-
     cd(root["sdkBuildDir"].asString().c_str());
     print_cwd();
 
-    string command = "ninja flash_" + project_target;
-    cout << command << std::endl;
-    system(command.c_str());
+    run_build(project_target);
+    run_merge_hex(project_target);
+    run_flash(project_target);
 
-    cd(current_directory.c_str());
+    cd(buf);
 }
+
 int main(int argc, char *argv[])
 {
 
@@ -111,27 +189,43 @@ int main(int argc, char *argv[])
             cd(current_directory.c_str());
             return EXIT_FAILURE;
         }
-        
+
         //put it all to lower case
         for (int i = 1; i < args.size(); i++)
         {
             transform(args[i].begin(), args[i].end(), args[i].begin(), [](unsigned char c)
                       { return std::tolower(c); });
-            cout << args[i] << endl;
         }
-        for (int i = 0; i < args.size(); i++)
+        if (args.size() == 1)
         {
-            if(args[i] == "config")
+            //run default program
+            nrf_default(root, project_target);
+        }
+        else
+        {
+            for (int i = 0; i < args.size(); i++)
             {
-                cout << "its config" << endl;
-            }
-            else if(args[i] == "flash")
-            {
-                cout << "its flash" << endl;
-            }
-            else if(args[i] == "build")
-            {
-                cout << "its build" << endl;
+                
+
+                if (args[i] == "config")
+                {
+                    cout << "its config" << endl;
+                    nrf_config(root);
+                }
+                else if (args[i] == "build")
+                {
+                    
+                    nrf_build(root, project_target);
+                }
+                else if(args[i] == "merge")
+                {
+                    nrf_merge_hex(root, project_target);
+                }
+                else if (args[i] == "flash")
+                {
+                    nrf_flash_project(root, project_target);
+                }
+           
             }
         }
 

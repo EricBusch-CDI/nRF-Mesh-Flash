@@ -2,13 +2,19 @@ import os
 import json
 import sys
 
-user_commands = (
-    "build",
-    "flash",
-    "config"
-)
+user_commands = {
+    "build" : "Use Ninja to build the application into hex file",
+    "merge" : "Merge soft device hex and application hex into one file",
+    "flash" : "Use Ninja target to flash to MCU",
+    "config" : "Open an instance of the CMSIS Configuration Wizzard",
+    "--version" :  "Get the version number of the nRF Tool"
+}
 
-NRF_TOOL_VERSION = "0.5"
+
+
+
+
+NRF_TOOL_VERSION = "0.1"
 
 class FileConfig:
 
@@ -55,9 +61,9 @@ class NrfBuilder(FileConfig):
         }
 
         self.command_description = [
-            "attempting to run ninja and perform build step",
-            "Merging softdevice and app hex",
-            "flashing project"
+            "Building Project",
+            "Merging soft device and hex into output file",
+            "Flashing project to MCU",
         ]
 
     def print_cmd_description(self, descpription_idx):
@@ -76,8 +82,6 @@ class NrfBuilder(FileConfig):
     def run_all(self):
         os.chdir(self.sdkBuildDir)
         self.flash_project()
-
-
 
 
     def build_project(self):
@@ -103,9 +107,12 @@ class NrfBuilder(FileConfig):
         
         os.system(self.cmsisCmd)
 
+    def help(self):
+        for key in user_commands:
+            print(str(user_commands[key]))
 
 def main():
-
+    # print(sys.argv)
     total_args = len(sys.argv)
     sys.argv = [element.lower() for element in sys.argv]
 
@@ -124,7 +131,7 @@ def main():
     if commands_passed is False:
         print("There is no commands")
         nrf_builder.build_project()
-        nrf_builder.merge_project()
+        nrf_builder.merge_hex()
         nrf_builder.flash_project()
         exit()
    

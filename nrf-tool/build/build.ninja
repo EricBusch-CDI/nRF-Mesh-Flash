@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: nrf_tool
+# Project: nrf-tool
 # Configurations: 
 # =============================================================================
 
@@ -35,6 +35,44 @@ include CMakeFiles/rules.ninja
 # Logical path to working directory; prefix for absolute paths.
 
 cmake_ninja_workdir = C$:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/build/
+# =============================================================================
+# Object build statements for EXECUTABLE target nrf-tool
+
+
+#############################################
+# Order-only phony target for nrf-tool
+
+build cmake_object_order_depends_target_nrf-tool: phony || CMakeFiles/nrf-tool.dir
+
+build CMakeFiles/nrf-tool.dir/nrf-tool.cpp.obj: CXX_COMPILER__nrf-tool_ C$:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/nrf-tool.cpp || cmake_object_order_depends_target_nrf-tool
+  DEP_FILE = CMakeFiles\nrf-tool.dir\nrf-tool.cpp.obj.d
+  INCLUDES = -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/CMAKE_SOURCE_DIR -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/dist/json
+  OBJECT_DIR = CMakeFiles\nrf-tool.dir
+  OBJECT_FILE_DIR = CMakeFiles\nrf-tool.dir
+
+build CMakeFiles/nrf-tool.dir/dist/jsoncpp.cpp.obj: CXX_COMPILER__nrf-tool_ C$:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/dist/jsoncpp.cpp || cmake_object_order_depends_target_nrf-tool
+  DEP_FILE = CMakeFiles\nrf-tool.dir\dist\jsoncpp.cpp.obj.d
+  INCLUDES = -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/CMAKE_SOURCE_DIR -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/dist/json
+  OBJECT_DIR = CMakeFiles\nrf-tool.dir
+  OBJECT_FILE_DIR = CMakeFiles\nrf-tool.dir\dist
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target nrf-tool
+
+
+#############################################
+# Link the executable nrf-tool.exe
+
+build nrf-tool.exe: CXX_EXECUTABLE_LINKER__nrf-tool_ CMakeFiles/nrf-tool.dir/nrf-tool.cpp.obj CMakeFiles/nrf-tool.dir/dist/jsoncpp.cpp.obj
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\nrf-tool.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = nrf-tool.exe
+  TARGET_IMPLIB = libnrf-tool.dll.a
+  TARGET_PDB = nrf-tool.exe.dbg
+
 
 #############################################
 # Utility command for install/local
@@ -70,44 +108,6 @@ build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
   restat = 1
 
 build edit_cache: phony CMakeFiles/edit_cache.util
-
-# =============================================================================
-# Object build statements for EXECUTABLE target nrf_tool
-
-
-#############################################
-# Order-only phony target for nrf_tool
-
-build cmake_object_order_depends_target_nrf_tool: phony || CMakeFiles/nrf_tool.dir
-
-build CMakeFiles/nrf_tool.dir/nrf-tool.cpp.obj: CXX_COMPILER__nrf_tool_ C$:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/nrf-tool.cpp || cmake_object_order_depends_target_nrf_tool
-  DEP_FILE = CMakeFiles\nrf_tool.dir\nrf-tool.cpp.obj.d
-  INCLUDES = -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/CMAKE_SOURCE_DIR -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/dist/json
-  OBJECT_DIR = CMakeFiles\nrf_tool.dir
-  OBJECT_FILE_DIR = CMakeFiles\nrf_tool.dir
-
-build CMakeFiles/nrf_tool.dir/dist/jsoncpp.cpp.obj: CXX_COMPILER__nrf_tool_ C$:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/dist/jsoncpp.cpp || cmake_object_order_depends_target_nrf_tool
-  DEP_FILE = CMakeFiles\nrf_tool.dir\dist\jsoncpp.cpp.obj.d
-  INCLUDES = -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/CMAKE_SOURCE_DIR -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json -IC:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/dist/json
-  OBJECT_DIR = CMakeFiles\nrf_tool.dir
-  OBJECT_FILE_DIR = CMakeFiles\nrf_tool.dir\dist
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target nrf_tool
-
-
-#############################################
-# Link the executable nrf_tool.exe
-
-build nrf_tool.exe: CXX_EXECUTABLE_LINKER__nrf_tool_ CMakeFiles/nrf_tool.dir/nrf-tool.cpp.obj CMakeFiles/nrf_tool.dir/dist/jsoncpp.cpp.obj
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\nrf_tool.dir
-  POST_BUILD = cd .
-  PRE_LINK = cd .
-  TARGET_FILE = nrf_tool.exe
-  TARGET_IMPLIB = libnrf_tool.dll.a
-  TARGET_PDB = nrf_tool.exe.dbg
 
 
 #############################################
@@ -213,7 +213,7 @@ build include/install/strip: phony include/CMakeFiles/install/strip.util
 # =============================================================================
 # Target aliases.
 
-build nrf_tool: phony nrf_tool.exe
+build nrf-tool: phony nrf-tool.exe
 
 # =============================================================================
 # Folder targets.
@@ -223,7 +223,7 @@ build nrf_tool: phony nrf_tool.exe
 #############################################
 # Folder: C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/build
 
-build all: phony nrf_tool.exe include/all
+build all: phony nrf-tool.exe include/all
 
 # =============================================================================
 

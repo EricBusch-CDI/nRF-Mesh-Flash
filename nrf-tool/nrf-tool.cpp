@@ -130,8 +130,6 @@ void nrf_default(Json::Value root, string project_target)
     cd(root["sdkBuildDir"].asString().c_str());
     print_cwd();
 
-    run_build(project_target);
-    run_merge_hex(project_target);
     run_flash(project_target);
 
     cd(buf);

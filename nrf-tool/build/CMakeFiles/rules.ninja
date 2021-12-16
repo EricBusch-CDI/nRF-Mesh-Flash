@@ -42,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\eric.busch\Documents\GitHub\nRF-Mesh-Flash\nrf-tool -BC:\Users\eric.busch\Documents\GitHub\nRF-Mesh-Flash\nrf-tool\build
+  command = "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\nRF-Mesh-Flash\nrf-tool -BC:\nRF-Mesh-Flash\nrf-tool\build
   description = Re-running CMake...
   generator = 1
 

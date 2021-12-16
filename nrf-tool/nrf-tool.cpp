@@ -82,7 +82,6 @@ void run_flash(string project_target)
     string command = "ninja flash_" + project_target;
     cout << command << std::endl;
     system(command.c_str());
-
 }
 void nrf_flash_project(Json::Value root, string project_target)
 {
@@ -107,20 +106,19 @@ void nrf_config(Json::Value root)
 {
     string cmsis_path = root["cmsisPath"].asString();
     string sdk_config_path = root["sdkConfPath"].asString();
-    
-    if(cmsis_path.empty())
+
+    if (cmsis_path.empty())
     {
         cout << "Given path to cmsis configurator is empty!" << endl;
         return;
     }
-    if(sdk_config_path.empty())
+    if (sdk_config_path.empty())
     {
         cout << "Given Path to sdk_config.h is empty!" << endl;
         return;
     }
 
     run_config(cmsis_path, sdk_config_path);
-
 }
 void nrf_default(Json::Value root, string project_target)
 {
@@ -136,24 +134,23 @@ void nrf_default(Json::Value root, string project_target)
 }
 void nrf_help()
 {
-    const map<string, string> help ={
-        {"build",  "Use Ninja to build the application into hex file"},
-        {"merge" , "Merge soft device hex and application hex into one file"},
-        {"flash" , "Use Ninja target to flash to MCU"},
-        {"config" , "Open an instance of the CMSIS Configuration Wizzard"},
-        {"--version" ,  "Get the version number of the nRF Tool"}
-    };
-    
+    const map<string, string> help = {
+        {"build", "Use Ninja to build the application into hex file"},
+        {"merge", "Merge soft device hex and application hex into one file"},
+        {"flash", "Use Ninja target to flash to MCU"},
+        {"config", "Open an instance of the CMSIS Configuration Wizzard"},
+        {"--version", "Get the version number of the nRF Tool"}};
+
     cout << TERMINAL_COLOR_GREEN << endl;
     cout << "nRF-Tool Help" << endl;
     cout << "------------------------------------------------" << endl;
 
-    for(auto const &x : help)
+    for (auto const &x : help)
     {
-         cout << x.first    // string (key)
-              << '\t'
-              << x.second   // string's value 
-              << endl;
+        cout << x.first // string (key)
+             << '\t'
+             << x.second // string's value
+             << endl;
     }
 
     cout << TERMINAL_COLOR_RESET << endl;
@@ -162,7 +159,7 @@ void nrf_rtt_viewer(Json::Value root)
 {
     string rtt_viewer_path = "\"" + root["rttViewerPath"].asString() + "\"";
 
-    if(rtt_viewer_path.empty())
+    if (rtt_viewer_path.empty())
     {
         cout << TERMINAL_COLOR_RED << "RTT Viewer Path Empty" << endl;
         cout << TERMINAL_COLOR_RESET << endl;
@@ -174,8 +171,6 @@ void nrf_rtt_viewer(Json::Value root)
 int main(int argc, char *argv[])
 {
 
-    // display_args(argc, argv);
-
     ifstream config_file;
     vector<string> config_params;
 
@@ -183,6 +178,26 @@ int main(int argc, char *argv[])
     Json::CharReaderBuilder builder;
 
     vector<string> args(argv, argv + argc);
+
+    for (int i = 1; i < args.size(); i++)
+    {
+        transform(args[i].begin(), args[i].end(), args[i].begin(), [](unsigned char c)
+                  { return std::tolower(c); });
+    }
+
+    for (int i = 1; i < args.size(); i++)
+    {
+        if (args[i] == "--version")
+        {
+            cout << TERMINAL_COLOR_GREEN << "Version " << NRF_TOOL_VERSION << endl;
+            cout << TERMINAL_COLOR_RESET << endl;
+        }
+        else if (args[i] == "--help" || args[i] == "man")
+        {
+            nrf_help();
+        }
+        return EXIT_SUCCESS;
+    }
 
     config_file.open("build_flash_config.json");
 
@@ -245,7 +260,6 @@ int main(int argc, char *argv[])
         {
             for (int i = 0; i < args.size(); i++)
             {
-                
 
                 if (args[i] == "config")
                 {
@@ -254,10 +268,10 @@ int main(int argc, char *argv[])
                 }
                 else if (args[i] == "build")
                 {
-                    
+
                     nrf_build(root, project_target);
                 }
-                else if(args[i] == "merge")
+                else if (args[i] == "merge")
                 {
                     nrf_merge_hex(root, project_target);
                 }
@@ -265,16 +279,16 @@ int main(int argc, char *argv[])
                 {
                     nrf_flash_project(root, project_target);
                 }
-                else if(args[i] == "--version")
+                else if (args[i] == "--version")
                 {
                     cout << TERMINAL_COLOR_GREEN << "Version " << NRF_TOOL_VERSION << endl;
                     cout << TERMINAL_COLOR_RESET << endl;
                 }
-                else if(args[i] == "help" || args[i] == "man")
+                else if (args[i] == "help" || args[i] == "man")
                 {
                     nrf_help();
-                }   
-                else if(args[i] == "rtt-viewer")
+                }
+                else if (args[i] == "rtt-viewer")
                 {
                     nrf_rtt_viewer(root);
                 }

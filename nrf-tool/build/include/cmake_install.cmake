@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include
+# Install script for directory: C:/nRF-Mesh-Flash/nrf-tool/include
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/nrf_tool")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/nrf-tool")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -47,16 +47,16 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   file(INSTALL DESTINATION "/json" TYPE FILE FILES
-    "C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json/allocator.h"
-    "C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json/assertions.h"
-    "C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json/config.h"
-    "C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json/forwards.h"
-    "C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json/json.h"
-    "C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json/json_features.h"
-    "C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json/reader.h"
-    "C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json/value.h"
-    "C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json/version.h"
-    "C:/Users/eric.busch/Documents/GitHub/nRF-Mesh-Flash/nrf-tool/include/json/writer.h"
+    "C:/nRF-Mesh-Flash/nrf-tool/include/json/allocator.h"
+    "C:/nRF-Mesh-Flash/nrf-tool/include/json/assertions.h"
+    "C:/nRF-Mesh-Flash/nrf-tool/include/json/config.h"
+    "C:/nRF-Mesh-Flash/nrf-tool/include/json/forwards.h"
+    "C:/nRF-Mesh-Flash/nrf-tool/include/json/json.h"
+    "C:/nRF-Mesh-Flash/nrf-tool/include/json/json_features.h"
+    "C:/nRF-Mesh-Flash/nrf-tool/include/json/reader.h"
+    "C:/nRF-Mesh-Flash/nrf-tool/include/json/value.h"
+    "C:/nRF-Mesh-Flash/nrf-tool/include/json/version.h"
+    "C:/nRF-Mesh-Flash/nrf-tool/include/json/writer.h"
     )
 endif()
 

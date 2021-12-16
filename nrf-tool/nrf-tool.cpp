@@ -55,7 +55,7 @@ void nrf_build(Json::Value root, string project_target)
     cwd(buf, sizeof(buf));
 
     cd(root["sdkBuildDir"].asString().c_str());
-
+     
     run_build(project_target);
 
     cd(buf);
@@ -93,6 +93,22 @@ void nrf_flash_project(Json::Value root, string project_target)
     run_flash(project_target);
 
     cd(buf);
+}
+void nrf_clean_project(Json::Value root, string project_target)
+{    
+    char buf[4096], buf2[4096];
+
+    cwd(buf, sizeof(buf));
+    
+    cd(root["sdkBuildDir"].asString().c_str());
+    cwd(buf2, sizeof(buf2));
+    cout << "build dir " << buf2 <<endl;
+    string command = "ninja clean " + project_target;
+    cout << command << endl;
+    system(command.c_str());
+
+    cd(buf);
+
 }
 void run_config(string cmsis_path, string sdk_config_path)
 {
@@ -187,16 +203,24 @@ int main(int argc, char *argv[])
 
     for (int i = 1; i < args.size(); i++)
     {
+        auto wasRan = false;
         if (args[i] == "--version")
         {
+            wasRan = true;
             cout << TERMINAL_COLOR_GREEN << "Version " << NRF_TOOL_VERSION << endl;
             cout << TERMINAL_COLOR_RESET << endl;
         }
         else if (args[i] == "--help" || args[i] == "man")
         {
+            wasRan = true;
             nrf_help();
         }
-        return EXIT_SUCCESS;
+
+        if(wasRan)
+        {
+            return EXIT_SUCCESS;
+        }
+        
     }
 
     config_file.open("build_flash_config.json");
@@ -279,19 +303,19 @@ int main(int argc, char *argv[])
                 {
                     nrf_flash_project(root, project_target);
                 }
-                else if (args[i] == "--version")
+                else if(args[i] == "clean")
                 {
-                    cout << TERMINAL_COLOR_GREEN << "Version " << NRF_TOOL_VERSION << endl;
-                    cout << TERMINAL_COLOR_RESET << endl;
-                }
-                else if (args[i] == "help" || args[i] == "man")
-                {
-                    nrf_help();
+                    nrf_clean_project(root, project_target);
                 }
                 else if (args[i] == "rtt-viewer")
                 {
                     nrf_rtt_viewer(root);
                 }
+                else
+                {
+                    cout << "ERROR: Unknown command " << args[i] << endl;
+                }
+
             }
         }
 

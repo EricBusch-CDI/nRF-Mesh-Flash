@@ -8,5 +8,5 @@
     "cmsisPath"   : "C:/Nordic_SDKS/nRF5SDK1702d674dde/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar",
     "sdkConfPath" : "C:/NW-Projects/NW-Mesh-Hub/mesh_hub_firmware_nrf52/include/sdk_config.h",
     "exampleBuildDir" : "C:/Nordic_SDKS/nrf5_SDK_for_Mesh_v5.0.0_src/build/examples/nw_mesh_hub/mesh_hub_firmware_nrf52",
-    "projectBuildDir" : "build/"
+    "projectOutputsDir" : "C:/NW-Projects/NW-Mesh-Hub/mesh_hub_firmware_nrf52/outputs/"
 }

@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -7,7 +8,8 @@
 #include "terminal_colors.h"
 #include "about.h"
 #include <iomanip>
-
+#include <sys/stat.h>
+#include <stdio.h>
 #ifdef _WIN32
 #include <direct.h>
 // MSDN recommends against using getcwd & chdir names
@@ -25,6 +27,45 @@ const char *user_commands[4] = {"build", "flash", "config", "help"};
 const char *ninja_commands[3] = {"", "merge_", "flash_"};
 
 using namespace std;
+
+bool is_valid_path(string path)
+{
+    struct stat s;
+    bool is_valid = false;
+
+    if (stat(path.c_str(), &s) == 0)
+    {
+        if (s.st_mode & S_IFDIR)
+        {
+            //it's a directory
+            std::cout << "Directory\n";
+            is_valid = true;
+        }
+        else if (s.st_mode & S_IFREG)
+        {
+            std::cout << "File\n";
+            //it's a file
+            is_valid = true;
+        }
+        else
+        {
+            std::cout << "Dunno\n";
+            is_valid = false;
+        }
+    }
+
+    return is_valid;
+}
+void copy_files(string src, string dst)
+{
+
+    std::string command = "cp " + src + " " + dst;
+
+    std::cout << command << std::endl;
+
+    system(command.c_str());
+}
+
 void cout_terminal_color(string color, string output)
 {
     cout << color << output << endl;
@@ -55,7 +96,7 @@ void nrf_build(Json::Value root, string project_target)
     cwd(buf, sizeof(buf));
 
     cd(root["sdkBuildDir"].asString().c_str());
-     
+
     run_build(project_target);
 
     cd(buf);
@@ -77,6 +118,21 @@ void nrf_merge_hex(Json::Value root, string project_target)
 
     cd(buf);
 }
+void nrf_copy_build(Json::Value root, string project_target)
+{
+    string example_build_dir = root["exampleBuildDir"].asString();
+    string projectOutputDir = root["projectOutputsDir"].asString();
+
+    std::cout << TERMINAL_COLOR_GREEN << "Copying build files to project outputs at " << projectOutputDir << TERMINAL_COLOR_RESET << std::endl;
+
+    string hex_files = example_build_dir + "/*.hex";
+    string elf_files = example_build_dir + "/*.elf";
+
+    copy_files(hex_files, projectOutputDir);
+    copy_files(elf_files, projectOutputDir);
+
+}
+
 void run_flash(string project_target)
 {
     string command = "ninja flash_" + project_target;
@@ -89,26 +145,25 @@ void nrf_flash_project(Json::Value root, string project_target)
     cwd(buf, sizeof(buf));
 
     cd(root["sdkBuildDir"].asString().c_str());
-
+    std::cout << root["sdkBuildDir"].asString().c_str();
     run_flash(project_target);
 
     cd(buf);
 }
 void nrf_clean_project(Json::Value root, string project_target)
-{    
+{
     char buf[4096], buf2[4096];
 
     cwd(buf, sizeof(buf));
-    
+
     cd(root["sdkBuildDir"].asString().c_str());
     cwd(buf2, sizeof(buf2));
-    cout << "build dir " << buf2 <<endl;
+    cout << "build dir " << buf2 << endl;
     string command = "ninja clean " + project_target;
     cout << command << endl;
     system(command.c_str());
 
     cd(buf);
-
 }
 void run_config(string cmsis_path, string sdk_config_path)
 {
@@ -216,11 +271,10 @@ int main(int argc, char *argv[])
             nrf_help();
         }
 
-        if(wasRan)
+        if (wasRan)
         {
             return EXIT_SUCCESS;
         }
-        
     }
 
     config_file.open("build_flash_config.json");
@@ -282,7 +336,7 @@ int main(int argc, char *argv[])
         }
         else
         {
-            for (int i = 0; i < args.size(); i++)
+            for (int i = 1; i < args.size(); i++)
             {
 
                 if (args[i] == "config")
@@ -299,11 +353,16 @@ int main(int argc, char *argv[])
                 {
                     nrf_merge_hex(root, project_target);
                 }
+
                 else if (args[i] == "flash")
                 {
                     nrf_flash_project(root, project_target);
                 }
-                else if(args[i] == "clean")
+                else if (args[i] == "copy-build")
+                {
+                    nrf_copy_build(root, project_target);
+                }
+                else if (args[i] == "clean")
                 {
                     nrf_clean_project(root, project_target);
                 }
@@ -315,7 +374,6 @@ int main(int argc, char *argv[])
                 {
                     cout << "ERROR: Unknown command " << args[i] << endl;
                 }
-
             }
         }
 
